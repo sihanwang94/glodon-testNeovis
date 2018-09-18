@@ -16,7 +16,8 @@
     </style>
 
     <!-- FIXME: load from dist -->
-    <script type="text/javascript" src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+    <!--<script type="text/javascript" src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script> -->
+    <script type="text/javascript" src="dist/neovis.js"></script>
 
 
     <script
@@ -42,15 +43,45 @@
                         "size": "pagerank",
                         "community": "community"
                         //"sizeCypher": "MATCH (n) WHERE id(n) = {id} MATCH (n)-[r]-() RETURN sum(r.weight) AS c"
+                    },
+                    "itemcode": {
+                        "caption": "id",
+                    },
+                    "stand_ca": {
+                        "caption": "id",
+                        "size": "pagerank",
+                    },
+                    "m_value": {
+                        "caption": "combination",
+                    },
+                    "s_value": {
+                        "caption": "value_type",
+                    },
+                    "solution": {
+                        "caption": "id",
                     }
+                    
+
                 },
                 relationships: {
                     "INTERACTS": {
                         "thickness": "weight",
                         "caption": false
+                    },
+                    "rel": {
+                        "caption": false,
+                        "thickness": "confidence"/100
+                    },
+                    "include": {
+                        "caption": false,
+                        "thickness": 0.001
+                    },
+                    "s2m": {
+                        "caption": false,
+                        "thickness": 0.001
                     }
                 },
-                initial_cypher: "MATCH (n)-[r:INTERACTS]->(m) RETURN n,r,m"
+                initial_cypher: "match (a)-[b:include]->(c), (c)-[d:include]->(e),(e)-[f:rel]->(g),(e)-[h:s2m]->(i),(i)-[j:rel]->(k) return a,b,c,d,e,g,f,h,i,j,k limit 20"
             };
             viz = new NeoVis.default(config);
             viz.render();
